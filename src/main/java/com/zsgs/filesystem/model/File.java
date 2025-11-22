@@ -1,5 +1,6 @@
 package com.zsgs.filesystem.model;
 
+import com.zsgs.filesystem.FileSystem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ public class File  implements  Folder{
     @Getter
     @Setter private String name ;
 
-    @Setter private int size ;
+    @Setter private int size =1;
     @Setter private String Path ;
     @Setter private FolderNode parentNode ;
 
@@ -18,7 +19,7 @@ public class File  implements  Folder{
 
     public String getPath(){
         if ( parentNode == null){
-            return "root/";
+            return "root";
         }
 
         StringBuilder sb = new StringBuilder();
@@ -28,9 +29,10 @@ public class File  implements  Folder{
         return sb.toString();
     }
 
+
     @Override
     public int getSize() {
-        return 1;
+        return this.size;
     }
 
     public String toJson(){
@@ -45,6 +47,10 @@ public class File  implements  Folder{
 
     @Override
     public Folder clone() {
-
+        File file = new File();
+        file.setName(this.name);
+        file.setSize(this.size);
+        file.setParentNode(null);
+        return file;
     }
 }

@@ -25,11 +25,12 @@ public class FileSystemManager {
     }
 
     void setUp(){
-        FolderNode root = new FolderNode();
-        root.setName("root");
-        root.setParentNode(null);
-        clipboard = ClipBoardManager.getInstance();
-        serializer = new FileSystemSerializer();
+        this.root = new FolderNode();
+        this.root.setName("root");
+        this.root.setParentNode(null);
+        this.clipboard = ClipBoardManager.getInstance();
+        this.serializer = new FileSystemSerializer();
+        setCurrentDir(root);
     }
 
     public static FileSystemManager getInstance(){
@@ -145,6 +146,10 @@ public class FileSystemManager {
     }
 
     public void goBack(){
+
+        if (currentDir.getParentNode() == null){
+            throw new InvalidCmtException(" You Already reached root node");
+        }
         FolderNode folder = (FolderNode) currentDir.getParentNode();
         System.out.println("  Directory Changed to folder " +folder.getName());
         setCurrentDir(folder);

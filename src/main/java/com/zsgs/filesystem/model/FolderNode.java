@@ -12,7 +12,7 @@ public class FolderNode implements  Folder{
     @Getter
     @Setter private Folder parentNode ;
     private  final List<Folder> children ;
-    //@Setter private String path ;
+
 
     public FolderNode(){
         this.children = new ArrayList<>() ;
@@ -30,7 +30,8 @@ public class FolderNode implements  Folder{
     public String getPath() {
 
         if ( parentNode == null){
-            return "root/";
+            return "root";
+
         }
 
         StringBuilder pathBuilder = new StringBuilder();
