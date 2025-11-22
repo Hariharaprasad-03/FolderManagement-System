@@ -30,10 +30,8 @@ public class FolderNode implements  Folder{
     public String getPath() {
 
         if ( parentNode == null){
-            return "root";
-
+            return this.name;
         }
-
         StringBuilder pathBuilder = new StringBuilder();
         pathBuilder.append(parentNode.getPath());
         pathBuilder.append("/");
@@ -65,21 +63,23 @@ public class FolderNode implements  Folder{
         return json.toString();
     }
     public List<Folder> getChildren(){
+
         return new ArrayList<>(children);
     }
 
     public void addItem( Folder child ) {
         children.add(child);
-        System.out.println("SuccessFully Added to Folder"+ this.name);
+        System.out.println("SuccessFully Added to Folder "+ this.name);
     }
 
     public void remove(String name) {
 
         boolean removed = children.removeIf(c-> c.getName().equals(name));
         if( removed ){
-            System.out.println(name + "Successfully removed" );
+            System.out.println(name + " Successfully removed" );
+            return ;
         } else {
-            throw  new ItemNotFoundException("Item '" + name + "' not found in current directory.");
+            throw  new ItemNotFoundException("Item " + name + " not found in current directory.");
         }
 
     }

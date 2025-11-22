@@ -15,17 +15,18 @@ public class ClipBoardManager {
 
     }
     // singleton method
-    public static ClipBoardManager getInstance() {
+    public static synchronized ClipBoardManager getInstance() {
         if ( instance == null){
             instance = new ClipBoardManager();
         }
         return instance;
     }
 
-    public void  copy(Folder folder){
+    public synchronized void   copy(Folder folder){
+
         clipboard.add(folder);
     }
-    public List<Folder> paste () {
+    public synchronized List<Folder> paste () {
         List<Folder>  items = new ArrayList<>(clipboard);
         clipboard.clear();
         return items ;

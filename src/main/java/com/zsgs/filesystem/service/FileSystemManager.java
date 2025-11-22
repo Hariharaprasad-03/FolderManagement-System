@@ -13,27 +13,23 @@ import java.util.Optional;
 
 public class FileSystemManager {
 
-    private FolderNode root ;
+    private final FolderNode root ;
     @Setter
     private FolderNode currentDir ;
     private static FileSystemManager instance ;
-    private ClipBoardManager clipboard ;
-    private FileSystemSerializer serializer ;
+    private final ClipBoardManager clipboard = ClipBoardManager.getInstance();
+    private final FileSystemSerializer serializer = new  FileSystemSerializer();
 
     private FileSystemManager(){
-        setUp();
-    }
 
-    void setUp(){
         this.root = new FolderNode();
         this.root.setName("root");
         this.root.setParentNode(null);
-        this.clipboard = ClipBoardManager.getInstance();
-        this.serializer = new FileSystemSerializer();
         setCurrentDir(root);
     }
 
-    public static FileSystemManager getInstance(){
+
+    public static synchronized FileSystemManager getInstance(){
         if( instance == null){
             instance = new FileSystemManager();
         }
@@ -43,8 +39,9 @@ public class FileSystemManager {
     public String getCurrentPath(){
         return currentDir.getPath();
     }
-    public int getFolderSize(){
-        return currentDir.getSize();
+    public void getFolderSize(){
+        int size = currentDir.getSize();
+        System.out.println("folder size Including folders & files " + size);
     }
 
     public void add(FolderNode folder){
@@ -56,6 +53,10 @@ public class FileSystemManager {
     }
     public  void copy(String name){
 
+        if (name == null){
+            throw new InvalidCmtException("please mention name of the item to copy");
+        }
+
         Optional<Folder> item = currentDir.getChildren().stream()
                 .filter(c->c.getName().equals(name))
                 .findFirst();
@@ -65,7 +66,7 @@ public class FileSystemManager {
 
         }
         else {
-            throw  new ItemNotFoundException("Item "+name+ " Not found in Cuurent Directory");
+            throw  new ItemNotFoundException("Item "+name+ " Not found in Current Directory");
         }
     }
 
@@ -73,7 +74,6 @@ public class FileSystemManager {
         List<Folder> items = clipboard.paste();
 
         if (items.isEmpty()){
-
             throw new ItemNotFoundException(" No items in the clipBoard");
         }
         for (Folder folder : items){
@@ -93,6 +93,7 @@ public class FileSystemManager {
         if (folder.isPresent()){
             Folder open = folder.get();
             if ( open instanceof FolderNode){
+                System.out.println("  Directory Changed to " +open.getName() +" folder");
                 setCurrentDir((FolderNode) open);
             }
             else {
@@ -107,7 +108,7 @@ public class FileSystemManager {
     public void listContents (){
         List<Folder> folders = currentDir.getChildren();
         if ( folders.isEmpty()){
-            System.out.println(" Cuurent Directory is Empty ");
+            System.out.println(" Current Directory is Empty ");
         }
         else {
 
@@ -119,11 +120,11 @@ public class FileSystemManager {
     }
 
     public void createFolder(String name){
-        FolderNode folder =new FolderNode() ;
+
         if ( name == ""){
             throw  new InvalidCmtException(" create Folder with name");
-
         } else {
+            FolderNode folder =new FolderNode() ;
             folder.setName(name);
             folder.setParentNode(currentDir);
             currentDir.addItem(folder);
@@ -142,7 +143,7 @@ public class FileSystemManager {
         }
     }
     public void saveSystem(){
-        serializer.saveToFile(currentDir);
+        serializer.saveToFile(this.root);
     }
 
     public void goBack(){
@@ -151,11 +152,15 @@ public class FileSystemManager {
             throw new InvalidCmtException(" You Already reached root node");
         }
         FolderNode folder = (FolderNode) currentDir.getParentNode();
-        System.out.println("  Directory Changed to folder " +folder.getName());
+        System.out.println("  Directory Changed to " +folder.getName() +"folder");
         setCurrentDir(folder);
 
     }
     public void goToRoot(){
+
+        if( currentDir == root){
+            throw new InvalidCmtException("you are Already in root Node ");
+        }
         setCurrentDir(this.root);
     }
 

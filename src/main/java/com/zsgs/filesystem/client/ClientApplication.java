@@ -1,5 +1,6 @@
 package com.zsgs.filesystem.client;
 
+import com.zsgs.filesystem.exception.InvalidCmtException;
 import com.zsgs.filesystem.service.FileSystemManager;
 import java.util.Scanner;
 
@@ -44,8 +45,20 @@ public class ClientApplication {
                     case "exit":
                         System.out.println("Shutting down...");
                         System.exit(0);
+                    case "dlt":
+                        manager.remove(arg);
+                        break;
+                    case "size":
+                        manager.getFolderSize();
+                        break;
+                    case "copy":
+                        manager.copy(arg);
+                        break;
+                    case "paste":
+                        manager.paste();
+                        break;
                     default:
-                        System.out.println("Unknown command.");
+                        throw new InvalidCmtException("Unknown Comment");
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
