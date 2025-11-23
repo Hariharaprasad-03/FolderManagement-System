@@ -77,7 +77,7 @@ public class FolderNode implements  Folder{
         boolean removed = children.removeIf(c-> c.getName().equals(name));
         if( removed ){
             System.out.println(name + " Successfully removed" );
-            return ;
+
         } else {
             throw  new ItemNotFoundException("Item " + name + " not found in current directory.");
         }

@@ -1,5 +1,6 @@
 package com.zsgs.filesystem.service;
 
+import com.zsgs.filesystem.exception.FolderNotFoundException;
 import com.zsgs.filesystem.exception.InvalidCmtException;
 import com.zsgs.filesystem.exception.ItemNotFoundException;
 import com.zsgs.filesystem.model.File;
@@ -53,8 +54,8 @@ public class FileSystemManager {
     }
     public  void copy(String name){
 
-        if (name == null){
-            throw new InvalidCmtException("please mention name of the item to copy");
+        if (name == null || name.isEmpty()){
+            throw new InvalidCmtException("please mention name of the item to copy \n ---> Eg : copy filename");
         }
 
         Optional<Folder> item = currentDir.getChildren().stream()
@@ -97,11 +98,11 @@ public class FileSystemManager {
                 setCurrentDir((FolderNode) open);
             }
             else {
-                throw new InvalidCmtException(" No Folder Component ");
+                throw new InvalidCmtException(" Invalid comment there no such  Folder Component ");
             }
         }
         else {
-            throw new ItemNotFoundException("folder " + name + " Not present in current Directory");
+            throw new FolderNotFoundException("folder " + name + " Not present in current Directory");
         }
     }
 
@@ -121,9 +122,17 @@ public class FileSystemManager {
 
     public void createFolder(String name){
 
-        if ( name == ""){
+        if ( name.isEmpty() ){
             throw  new InvalidCmtException(" create Folder with name");
-        } else {
+        }
+        else {
+
+            boolean exists = currentDir.getChildren().stream()
+                    .anyMatch(node -> node.getName().equals(name));
+
+            if (exists) {
+                throw new InvalidCmtException("Error: A file or folder named '" + name + "' already exists.");
+            }
             FolderNode folder =new FolderNode() ;
             folder.setName(name);
             folder.setParentNode(currentDir);
@@ -133,7 +142,7 @@ public class FileSystemManager {
     public void createFile(String name){
         File file = new File();
 
-        if ( name == null || name == "") {
+        if ( name == null || name.isEmpty()) {
             throw new InvalidCmtException(" Give name for file ");
         }
         else {

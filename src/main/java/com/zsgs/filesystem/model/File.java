@@ -1,6 +1,5 @@
 package com.zsgs.filesystem.model;
 
-import com.zsgs.filesystem.FileSystem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,6 @@ public class File  implements  Folder{
     @Setter private String name ;
 
     @Setter private int size =1;
-    @Setter private String Path ;
     @Setter private FolderNode parentNode ;
 
     public File() {

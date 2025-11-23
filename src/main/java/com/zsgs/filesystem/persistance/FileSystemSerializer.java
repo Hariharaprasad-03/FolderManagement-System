@@ -8,7 +8,12 @@ import java.io.IOException;
 
 public class FileSystemSerializer {
 
-    private final String filePath = "D:\\llds\\folderManagement\\untitled\\src\\json.txt" ;
+    private final String filePath;
+
+    public FileSystemSerializer() {
+        filePath = "D:\\llds\\folderManagement\\untitled\\src\\json.txt";
+    }
+
     public void saveToFile(FolderNode rootNode) {
         System.out.println("Saving file system to " + filePath + "...");
         String jsonString = rootNode.toJson();
