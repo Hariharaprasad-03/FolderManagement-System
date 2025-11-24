@@ -83,6 +83,7 @@ public class FolderNode implements  Folder{
         }
 
     }
+    // protoType design pattern
     public FolderNode clone(){
         
         FolderNode newFolder = new FolderNode();
