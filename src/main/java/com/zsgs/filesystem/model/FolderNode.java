@@ -43,7 +43,6 @@ public class FolderNode implements  Folder{
     public String toJson() {
         StringBuilder json = new StringBuilder();
 
-
         json.append("{");
         json.append("\"type\": \"folder\",");
         json.append("\"name\": \"").append(this.name).append("\",");
@@ -57,7 +56,6 @@ public class FolderNode implements  Folder{
                 json.append(",");
             }
         }
-        
         json.append("]");
         json.append("}");
         return json.toString();

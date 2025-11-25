@@ -27,7 +27,7 @@ public class ClientApplication {
                     case "mkdir":
                         manager.createFolder(arg);
                         break;
-                    case "create": // create file
+                    case "touch": // create file
                         manager.createFile(arg);
                         break;
                     case "cd":

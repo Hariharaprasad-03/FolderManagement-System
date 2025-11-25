@@ -7,7 +7,6 @@ public class File  implements  Folder{
 
     @Getter
     @Setter private String name ;
-
     @Setter private int size =1;
     @Setter private FolderNode parentNode ;
 
@@ -19,14 +18,12 @@ public class File  implements  Folder{
         if ( parentNode == null){
             return "root";
         }
-
         StringBuilder sb = new StringBuilder();
         sb.append(parentNode.getPath());
         sb.append("/");
         sb.append(name);
         return sb.toString();
     }
-
 
     @Override
     public int getSize() {
