@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class ClientApplication {
 
-    private FileSystemManager manager = FileSystemManager.getInstance();
-    private Scanner scanner = new Scanner(System.in);
+    private final FileSystemManager manager = FileSystemManager.getInstance();
+    private final Scanner scanner = new Scanner(System.in);
 
     public void init(){
         while (true) {
@@ -43,6 +43,7 @@ public class ClientApplication {
                         manager.saveSystem();
                         break;
                     case "exit":
+                        scanner.close();
                         System.out.println("Shutting down...");
                         System.exit(0);
                     case "dlt":

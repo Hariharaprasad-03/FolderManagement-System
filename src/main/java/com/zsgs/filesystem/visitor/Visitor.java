@@ -5,6 +5,6 @@ import com.zsgs.filesystem.model.FolderNode;
 
 public interface Visitor {
 
-    public void visit( FolderNode folder);
-    public void visit( File file);
+     void visit( FolderNode folder);
+    void visit( File file);
 }
