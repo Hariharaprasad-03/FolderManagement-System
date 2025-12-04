@@ -11,7 +11,7 @@ public class ClientApplication {
     private final FileSystemManager manager = FileSystemManager.getInstance();
     private final Scanner scanner = new Scanner(System.in);
 
-    public void init() throws FileNotFoundException {
+    public void init()  {
         while (true) {
 
             System.out.print("\n" + manager.getCurrentPath() + " > ");
