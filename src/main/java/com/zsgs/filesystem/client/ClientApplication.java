@@ -2,6 +2,8 @@ package com.zsgs.filesystem.client;
 
 import com.zsgs.filesystem.exception.InvalidCmtException;
 import com.zsgs.filesystem.service.FileSystemManager;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ClientApplication {
@@ -9,7 +11,7 @@ public class ClientApplication {
     private final FileSystemManager manager = FileSystemManager.getInstance();
     private final Scanner scanner = new Scanner(System.in);
 
-    public void init(){
+    public void init() throws FileNotFoundException {
         while (true) {
 
             System.out.print("\n" + manager.getCurrentPath() + " > ");
@@ -58,6 +60,8 @@ public class ClientApplication {
                     case "paste":
                         manager.paste();
                         break;
+                    case "search":
+                        manager.searchItem(arg);
                     default:
                         throw new InvalidCmtException("Unknown Comment");
                 }

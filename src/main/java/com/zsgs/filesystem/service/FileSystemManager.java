@@ -7,6 +7,7 @@ import com.zsgs.filesystem.model.File;
 import com.zsgs.filesystem.model.Folder;
 import com.zsgs.filesystem.model.FolderNode;
 import com.zsgs.filesystem.persistance.FileSystemSerializer;
+import com.zsgs.filesystem.visitor.SearchVisitor;
 import lombok.Setter;
 
 import java.util.List;
@@ -171,6 +172,21 @@ public class FileSystemManager {
             throw new InvalidCmtException("you are Already in root Node ");
         }
         setCurrentDir(this.root);
+    }
+    public void searchItem( String item){
+
+        if (item.trim() == null){
+            throw new ItemNotFoundException(" please ebter item to search \n Eg : search itemName");
+        }
+        SearchVisitor visit = new SearchVisitor(item);
+        visit.visit(currentDir);
+
+    }
+    public void displaySearchREsults(List<Folder> res){
+
+        for(Folder f : res){
+            System.out.printf("%-10s %-30s",f.getName(),f.getPath());
+        }
     }
 
 

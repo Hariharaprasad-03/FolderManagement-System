@@ -17,7 +17,7 @@ public class SearchVisitor implements  Visitor{
     }
 
     public void visit(FolderNode folder){
-        if ( folder.getName().contains(searchTerm)){
+        if ( folder.getName().toLowerCase().contains(searchTerm)){
             results.add(folder);
         }
     }
@@ -26,5 +26,9 @@ public class SearchVisitor implements  Visitor{
         if ( file.getName().contains(searchTerm)) {
             results.add(file);
         }
+    }
+
+    public List<Folder> getResults() {
+        return new ArrayList<>(results);
     }
 }
